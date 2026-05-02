@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   // Since we use localStorage for tokens, we can't easily check it in Next.js middleware (which runs on the server).
   // In a real production app with SSR, you'd use HttpOnly cookies.
   // For now, we'll rely on client-side protection or just the API's own protection.
