@@ -1,0 +1,202 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: hsl(54 100% 91%);
+  /* #fffcd0 */
+  --color-foreground: hsl(0 4% 15%);
+  /* #262323 */
+  --color-card: hsl(54 100% 88%);
+  --color-card-foreground: hsl(0 4% 15%);
+  --color-popover: hsl(54 100% 88%);
+  --color-popover-foreground: hsl(0 4% 15%);
+  --color-primary: hsl(252 2% 51%);
+  /* #807e83 */
+  --color-primary-foreground: hsl(0 0% 98%);
+  --color-secondary: hsl(54 20% 85%);
+  --color-secondary-foreground: hsl(0 4% 15%);
+  --color-muted: hsl(54 10% 80%);
+  --color-muted-foreground: hsl(0 4% 40%);
+  --color-accent: hsl(54 20% 85%);
+  --color-accent-foreground: hsl(0 4% 15%);
+  --color-destructive: hsl(0 62.8% 30.6%);
+  --color-destructive-foreground: hsl(0 0% 98%);
+  --color-border: hsl(0 4% 85%);
+  --color-input: hsl(0 4% 85%);
+  --color-ring: hsl(252 2% 51%);
+  --radius-lg: 0.75rem;
+  --radius-md: calc(0.75rem - 2px);
+  --radius-sm: calc(0.75rem - 4px);
+}
+
+:root {
+  --bg: #fffcd0;
+  --void: #FFFFFF;
+  --surface: #403d3e;
+  --surface2: rgba(38, 35, 35, 0.04);
+  --border: rgba(38, 35, 35, 0.1);
+  --border2: rgba(38, 35, 35, 0.2);
+  --text: #262323;
+  --text-dim: rgba(38, 35, 35, 0.7);
+  --text-muted: rgba(38, 35, 35, 0.5);
+  --primary: #807e83;
+  --primary-glow: rgba(128, 126, 131, 0.1);
+  --primary-faint: rgba(128, 126, 131, 0.02);
+  
+  /* Legacy mapping for dashboard compatibility */
+  --lavender: #807e83;
+  --lavender2: #807e83;
+  --lav-dim: rgba(128, 126, 131, 0.06);
+  --lav-border: rgba(128, 126, 131, 0.1);
+  --lav-glow: rgba(128, 126, 131, 0.05);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body, button, input, select, textarea, h1, h2, h3, h4, h5, h6, span, p, a {
+    font-family: var(--font-plex), sans-serif !important;
+    letter-spacing: -0.07em !important;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-plex), sans-serif;
+    letter-spacing: -0.05em;
+    font-size: 1.125rem;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: #F8F9FA !important;
+    color: #111 !important;
+  }
+
+  /* Professional Dashboard Background Utility */
+  .dashboard-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(circle at 50% -20%, rgba(202, 40, 81, 0.05) 0%, transparent 60%),
+                radial-gradient(circle at 0% 100%, rgba(202, 40, 81, 0.02) 0%, transparent 40%),
+                #F8F9FA;
+    overflow: hidden;
+  }
+
+  .dashboard-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(circle at center, black, transparent 80%);
+    pointer-events: none;
+  }
+}
+
+.liquid-glass {
+  background: rgba(0, 0, 0, 0.4);
+  background-blend-mode: luminosity;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: none;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.liquid-glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.4px;
+  background: linear-gradient(180deg,
+      rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.1) 20%,
+      rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0) 60%,
+      rgba(255, 255, 255, 0.1) 80%, rgba(255, 255, 255, 0.3) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.liquid-glass-light {
+  background: rgba(255, 252, 208, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(38, 35, 35, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(38, 35, 35, 0.03);
+}
+
+.feature-card {
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.feature-card:hover {
+  transform: translateY(-12px) scale(1.02);
+  background: rgba(255, 252, 208, 0.8);
+  border-color: var(--primary);
+  box-shadow: 0 20px 40px rgba(38, 35, 35, 0.1);
+}
+
+.feature-card:hover img {
+  transform: scale(1.1);
+}
+
+.feature-card img {
+  transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.liquid-glass-light::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.4px;
+  background: linear-gradient(180deg,
+      rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.01) 20%,
+      rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0) 60%,
+      rgba(0, 0, 0, 0.01) 80%, rgba(0, 0, 0, 0.05) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Character Entrance Animation */
+.char-animation {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  filter: blur(10px);
+  transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity, filter;
+}
+
+.char-animation.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0px);
+}
+
+/* Smooth Card Entrance */
+.vex-card-entrance {
+  animation: vex-fade-up 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes vex-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.98);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
+  }
+}
