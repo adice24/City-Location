@@ -74,10 +74,51 @@ export const api = {
   }
 };
 
+const MOCK_CITIES: City[] = [
+  { 
+    id: '1', 
+    name: 'Bangalore', 
+    slug: 'bangalore', 
+    count: 12400, 
+    description: 'Silicon Valley of India', 
+    tag: 'Tech Hub' 
+  },
+  { 
+    id: '2', 
+    name: 'Chennai', 
+    slug: 'chennai', 
+    count: 8500, 
+    description: 'Automobile Hub of India', 
+    tag: 'Industrial' 
+  },
+  { 
+    id: '3', 
+    name: 'Hyderabad', 
+    slug: 'hyderabad', 
+    count: 10200, 
+    description: 'Pharma and Tech Center', 
+    tag: 'Pharma' 
+  },
+  { 
+    id: '4', 
+    name: 'Kochi', 
+    slug: 'kochi', 
+    count: 4500, 
+    description: 'Queen of the Arabian Sea', 
+    tag: 'Port City' 
+  }
+];
+
 // COMPATIBILITY LAYER FOR EXISTING COMPONENTS
 export async function getCities(): Promise<City[]> {
   try {
     const cities = await api.cities.getAll();
+    if (!cities || cities.length === 0) return MOCK_CITIES.map(c => ({
+      ...c,
+      gradient: getCityGradient(c.slug),
+      accent: getCityAccent(c.slug)
+    }));
+
     return cities.map(c => ({
       ...c,
       count: (c as { _count?: { listings: number } })._count?.listings || 0,
@@ -86,7 +127,11 @@ export async function getCities(): Promise<City[]> {
       accent: getCityAccent(c.slug)
     }));
   } catch (_e) {
-    return []; // Fallback to empty
+    return MOCK_CITIES.map(c => ({
+      ...c,
+      gradient: getCityGradient(c.slug),
+      accent: getCityAccent(c.slug)
+    }));
   }
 }
 
